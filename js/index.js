@@ -129,7 +129,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// const modalTimerId = setTimeout(openModal, 7000);
+const modalTimerId = setTimeout(openModal, 7000);
 
 function showModalByScrol () {
     if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
@@ -208,5 +208,49 @@ new MenuCard(
     21,
     '.menu .container'
 ).render();
+
+// Forms
+
+const forms = document.querySelectorAll('form');
+
+forms.forEach(item => {
+    postData(item);
+});
+
+const message = {
+    loading: 'Загрузка',
+    secces: 'Спасибо! Скоро мы с Вами свяжемся',
+    failure: 'Что-то пошло не так...'
+};
+
+function postData(form) {
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const statusMessage = document.createElement('div');
+        statusMessage.classList.add('status');
+        statusMessage.textContent = message.loading;
+        form.append(statusMessage);
+
+        const request = new XMLHttpRequest();
+        request.open('POST', 'server1.php');
+
+        // request.setRequestHeader('Content-type', 'multipart/form-data');
+        const formData = new FormData(form);
+
+        request.send(formData);
+
+        request.addEventListener('load', () => {
+            if (request.status === 200) {
+                console.log(request.response);
+                // statusMessage.textContent = message.secces;
+            } else {
+                statusMessage.textContent = message.failure;
+            }
+        });
+
+
+    });
+}
 
 // });
