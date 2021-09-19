@@ -233,17 +233,28 @@ function postData(form) {
         form.append(statusMessage);
 
         const request = new XMLHttpRequest();
-        request.open('POST', 'server1.php');
+        request.open('POST', 'server.php');
 
-        // request.setRequestHeader('Content-type', 'multipart/form-data');
+        request.setRequestHeader('Content-type', 'application/json');
         const formData = new FormData(form);
 
-        request.send(formData);
+        const object = {};
+        formData.forEach((value, key) => {
+            object[key] = value;
+        });
+
+        const json = JSON.stringify(object);
+
+        request.send(json);
 
         request.addEventListener('load', () => {
             if (request.status === 200) {
                 console.log(request.response);
-                // statusMessage.textContent = message.secces;
+                statusMessage.textContent = message.secces;
+                form.reset();
+                setTimeout(() => {
+                    statusMessage.remove();
+                }, 2500);
             } else {
                 statusMessage.textContent = message.failure;
             }
