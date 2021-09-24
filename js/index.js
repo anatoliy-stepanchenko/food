@@ -211,7 +211,7 @@ new MenuCard(
 const forms = document.querySelectorAll('form');
 
 forms.forEach(item => {
-    postData(item);
+    bindPostData(item);
 });
 
 const message = {
@@ -220,7 +220,18 @@ const message = {
     failure: 'Что-то пошло не так...'
 };
 
-function postData(form) {
+const postData = async (url, data) => {
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: data
+    });
+    return await res.json();
+};
+
+function bindPostData(form) {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -238,15 +249,8 @@ function postData(form) {
         formData.forEach((value, key) => {
             object[key] = value;
         });
-        
-        fetch('server.php', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(object)
-        })
-        .then(data => data.text())
+
+        postData('server.phphttp://localhost:3000/requests', JSON.stringify(object))
         .then(data => {
             console.log(data);
             showThanksModal(message.secces);
@@ -283,7 +287,7 @@ function showThanksModal(message) {
     }, 4000);
 }
 
-fetch('db.json')
+fetch('http://localhost:3000/menu')
     .then(data => data.json())
     .then(res =>console.log(res));
 
