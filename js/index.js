@@ -179,17 +179,24 @@ class MenuCard {
     }
 }
 
-const getResource = async url => {
-    const res = await fetch(url);
-    if (!res.ok) {
-        throw new Error(`Could not fetch ${url}, статус: ${res.status}`);
-    }
-    return await res.json();
-};
+// const getResource = async url => {
+//     const res = await fetch(url);
+//     if (!res.ok) {
+//         throw new Error(`Could not fetch ${url}, статус: ${res.status}`);
+//     }
+//     return await res.json();
+// };
 
-getResource('http://localhost:3000/menu')
+// getResource('http://localhost:3000/menu')
+//     .then(data => {
+//         data.forEach(({img, altimg, title, desrc, prise}) => {
+//             new MenuCard(img, altimg, title, desrc, prise, '.menu .container').render();
+//         });
+//     });
+
+axios.get('http://localhost:3000/menu')
     .then(data => {
-        data.forEach(({img, altimg, title, desrc, prise}) => {
+        data.data.forEach(({img, altimg, title, desrc, prise}) => {
             new MenuCard(img, altimg, title, desrc, prise, '.menu .container').render();
         });
     });
