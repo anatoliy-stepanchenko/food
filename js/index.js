@@ -140,12 +140,12 @@ window.addEventListener('scroll', showModalByScrol);
 // Используем классы для карточек
 
 class MenuCard {
-    constructor(src, alt, title, descr, prise, parentSelector, ...classes) {
+    constructor(src, alt, title, descr, price, parentSelector, ...classes) {
         this.src = src;
         this.alt = alt;
         this.title = title;
         this.descr = descr;
-        this.prise = prise;
+        this.price = price;
         this.classes = classes;
         this.parent = document.querySelector(parentSelector);
         this.transfer = 27;
@@ -153,7 +153,7 @@ class MenuCard {
     }
 
     chengeToUAH() {
-        this.prise = this.prise * this.transfer;
+        this.price = this.price * this.transfer;
     }
 
     render() {
@@ -172,7 +172,7 @@ class MenuCard {
             <div class="menu__item-divider"></div>
             <div class="menu__item-price">
                 <div class="menu__item-cost">Цена:</div>
-                <div class="menu__item-total"><span>${this.prise}</span> грн/день</div>
+                <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
             </div>
         `;
         this.parent.append(element);
@@ -189,15 +189,15 @@ class MenuCard {
 
 // getResource('http://localhost:3000/menu')
 //     .then(data => {
-//         data.forEach(({img, altimg, title, desrc, prise}) => {
-//             new MenuCard(img, altimg, title, desrc, prise, '.menu .container').render();
+//         data.forEach(({img, altimg, title, descr, price}) => {
+//             new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
 //         });
 //     });
 
 axios.get('http://localhost:3000/menu')
     .then(data => {
-        data.data.forEach(({img, altimg, title, desrc, prise}) => {
-            new MenuCard(img, altimg, title, desrc, prise, '.menu .container').render();
+        data.data.forEach(({img, altimg, title, descr, price}) => {
+            new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
         });
     });
 
