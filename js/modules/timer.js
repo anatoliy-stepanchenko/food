@@ -1,6 +1,4 @@
-function tamer() {
-
-    const deadline = '2021-12-31';
+function timer(id, deadline) {
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -49,7 +47,7 @@ function tamer() {
         }
     }
 
-    setClock('.timer', deadline);
+    setClock(id, deadline);
 }
 
-module.exports = tamer;
+export default timer;
